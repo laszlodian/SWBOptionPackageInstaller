@@ -1,0 +1,12 @@
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\bin\Debug\SWBOptionPackageInstaller.exe.config
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\bin\Debug\SWBOptionPackageInstaller.exe
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\bin\Debug\SWBOptionPackageInstaller.pdb
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\bin\Debug\TestToolsBase.dll
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\bin\Debug\TestToolsBase.pdb
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\obj\Debug\SWBOptionPackageInstaller.csprojAssemblyReference.cache
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\obj\Debug\SWBOptionPackageInstaller.Form1.resources
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\obj\Debug\SWBOptionPackageInstaller.Properties.Resources.resources
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\obj\Debug\SWBOptionPackageInstaller.csproj.GenerateResource.cache
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\obj\Debug\SWBOptionPackageInstaller.csproj.CopyComplete
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\obj\Debug\SWBOptionPackageInstaller.exe
+C:\Users\dian\source\repos\SWBOptionPackageInstaller\obj\Debug\SWBOptionPackageInstaller.pdb
