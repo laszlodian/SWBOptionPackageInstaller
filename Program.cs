@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TestToolsBase.Helpers;
 
-namespace SWBOptionPackageInstaller
+namespace SWB_OptionPackageInstaller
 {
     static class Program
     {
@@ -15,12 +14,22 @@ namespace SWBOptionPackageInstaller
         [STAThread]
         static void Main()
         {
+            InitializeControllerClassesInstance();
 
             TraceHelper.SetupListener();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
+        }
+
+        private static void InitializeControllerClassesInstance()
+        {
+            IOHandler iOHandler = new IOHandler();
+            ArtifactHandler artifactHandler = new ArtifactHandler();
+            CommandControler commandControler = new CommandControler();
+            SQLManager sQLManager = new SQLManager();
+            CheckStatesHandler checkStatesHandler = new CheckStatesHandler();
         }
     }
 }

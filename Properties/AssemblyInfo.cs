@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SWBOptionPackageInstaller")]
+[assembly: AssemblyTitle("SWB_OptionPackageInstaller")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("KUKA AG")]
-[assembly: AssemblyProduct("SWBOptionPackageInstaller")]
+[assembly: AssemblyProduct("SWB_OptionPackageInstaller")]
 [assembly: AssemblyCopyright("Copyright © KUKA AG 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e71ff724-a2a4-43da-80ca-3c41704ea35e")]
+[assembly: Guid("1bf8ff4c-aa1b-49a2-b493-5ba498d07c6a")]
 
 // Version information for an assembly consists of the following four values:
 //
