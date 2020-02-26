@@ -11,8 +11,15 @@ namespace SWB_OptionPackageInstaller
    public class ArtifactHandler
     {
         public static ArtifactHandler Instance=null;
-
         public List<string> packages = new List<string>();
+
+        private List<string> packagesNames=new List<string>();
+
+        public List<string> PackagesNames
+        {
+            get { return packagesNames; }
+            set { packagesNames = value; }
+        }
 
 
         public ArtifactHandler()
@@ -30,7 +37,7 @@ namespace SWB_OptionPackageInstaller
             foreach (FileInfo package in optionPackagesPath.GetFiles("*.zip"))
             {
                 packages.Add(package.FullName);
-
+                packagesNames.Add(package.Name);
                 
             }
 

@@ -7,11 +7,6 @@ C:\Users\dian\source\repos\SWB_OptionPackageInstaller\obj\Debug\SWB_OptionPackag
 C:\Users\dian\source\repos\SWB_OptionPackageInstaller\obj\Debug\SWB_OptionPackageInstaller.csproj.GenerateResource.cache
 C:\Users\dian\source\repos\SWB_OptionPackageInstaller\obj\Debug\SWB_OptionPackageInstaller.exe
 C:\Users\dian\source\repos\SWB_OptionPackageInstaller\obj\Debug\SWB_OptionPackageInstaller.pdb
-C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.MainForm.resources
-C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.Properties.Resources.resources
-C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.csproj.GenerateResource.cache
-C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.exe
-C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.pdb
 C:\projects\SWBSetupHelper-master\bin\Debug\SWB_OptionPackageInstaller.exe.config
 C:\projects\SWBSetupHelper-master\bin\Debug\SWB_OptionPackageInstaller.exe
 C:\projects\SWBSetupHelper-master\bin\Debug\SWB_OptionPackageInstaller.pdb
@@ -19,5 +14,9 @@ C:\projects\SWBSetupHelper-master\bin\Debug\Npgsql.dll
 C:\projects\SWBSetupHelper-master\bin\Debug\Mono.Security.dll
 C:\projects\SWBSetupHelper-master\bin\Debug\Npgsql.pdb
 C:\projects\SWBSetupHelper-master\bin\Debug\Npgsql.xml
+C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.MainForm.resources
+C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.Properties.Resources.resources
+C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.csproj.GenerateResource.cache
 C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.csproj.CopyComplete
-C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.csprojAssemblyReference.cache
+C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.exe
+C:\projects\SWBSetupHelper-master\obj\Debug\SWB_OptionPackageInstaller.pdb

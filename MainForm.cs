@@ -49,24 +49,35 @@ namespace SWB_OptionPackageInstaller
             InitializeComponent();
 
             dgv.Dock = DockStyle.Top;
-            dgv.BackgroundColor = Color.Fuchsia;      
+            dgv.BackgroundColor = Color.DarkCyan;      
             this.tabControl1.TabPages[1].Controls.Add(dgv);    
         
             tbPathOfOptionpackages.Text = @"C:\_SWB\optionpackages";
             tbPathOfSWB.Text = @"C:\_SWB\SWB";
+           
         }
 
-        public void ConfigureDataGridView()
+        public void ConfigureDataGridView(string packagesList)
         {
-            foreach (string pkg in CommandControler.Instance.OptionPackageList.Split(' '))
+            string clearPackageName = string.Empty;
+            foreach (string pkg in packagesList.Split(new string[] { "-repository" },StringSplitOptions.RemoveEmptyEntries))
             {
-                bindingSource1.Add(new PackageGridModel(pkg, "version",new DataGridViewCheckBoxCell()));
-                
+                if (string.IsNullOrEmpty(pkg.Trim()))
+                {
+                    continue;
+                }
+                clearPackageName = pkg.Substring(pkg.IndexOf(":///") + 4);//,  (pkg.LastIndexOf('!')+1)- pkg.IndexOf(":///"));
+               clearPackageName= clearPackageName.Remove(clearPackageName.IndexOf('!'));
+                bindingSource1.Add(new PackageGridModel(clearPackageName, "version",new DataGridViewCheckBoxCell()));                
             }
 
-            dgv.Font = new Font(dgv.Font, FontStyle.Bold);
+            dgv.Font = new Font(dgv.Font, FontStyle.Regular);
+            tabControl1.TabPages[1].Layout += MainForm_Layout;
+        }
 
-            this.Load += new System.EventHandler(EnumsAndComboBox_Load_For_All);
+        private void MainForm_Layout(object sender, LayoutEventArgs e)
+        {
+            EnumsAndComboBox_Load_For_All(sender, e);
         }
 
         public void EnumsAndComboBox_Load_For_All(object sender, EventArgs e)
@@ -81,7 +92,7 @@ namespace SWB_OptionPackageInstaller
 
             column = new DataGridViewTextBoxColumn();
             column.DataPropertyName = "OptionPackageName";
-            column.Name = "Option Package Elnevezése";
+            column.Name = "OptionPackage Elnevezése";
             dgv.Columns.Add(column);
 
 
@@ -124,7 +135,9 @@ namespace SWB_OptionPackageInstaller
                     return;
 
                 CommandControler.Instance.OptionPackageList= ArtifactHandler.Instance.CollectOptionPackages(PathOfOptionPackages);
-                ConfigureDataGridView();
+                ConfigureDataGridView(CommandControler.Instance.OptionPackageList);
+                
+                
                 btStart_Click(null, EventArgs.Empty);
             }
         }

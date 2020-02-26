@@ -49,7 +49,10 @@ namespace SWB_OptionPackageInstaller
         public string OptionPackageList
         {
             get { return optionPackageList; }
-            set { optionPackageList = value; }
+            set 
+            { optionPackageList = value;
+                
+            }
         } 
 
         #endregion
@@ -68,7 +71,7 @@ namespace SWB_OptionPackageInstaller
                 */
             string commandToRun = string.Empty;
             optionPackageList =     ArtifactHandler.Instance.CollectOptionPackages(MainForm.Instance.PathOfOptionPackages);
-            MainForm.Instance.ConfigureDataGridView();
+            MainForm.Instance.ConfigureDataGridView(OptionPackageList);
             if (OptionPackageList == string.Empty || OptionPackageList == null)
             {
                 return;
