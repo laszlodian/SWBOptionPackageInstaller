@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace SWB_OptionPackageInstaller
 {
     public class CommandControler
     {
+        public Dictionary<string, string> PackagesInfo = new Dictionary<string, string>();
         public static CommandControler Instance = null;
         public string sunriseWorkbenchPath = @"C:\_SWB\SWB";
         /// <summary>
@@ -26,6 +28,15 @@ namespace SWB_OptionPackageInstaller
         public string realWorkingCommand = "C:/_SWB/SWB/eclipsec.exe -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository jar:\"file:///C:/_SWB/optionpackages/0000345989;01;KUKA Sunrise.Mobility 1.11 KMP_KMR oM.zip!/\" -repository jar:\"file:///C:/_SWB/optionpackages/0000345991;01;KUKA Sunrise.Mobility 1.11 KMP 1500.zip!/\" -repository jar:\"file:///C:/_SWB/optionpackages/0000345992;01;KUKA Sunrise.Mobility 1.11 KMP 200.zip!/\" -installIUs com.kuka.kmpOmniMove.swb.feature.feature.group -installIUs com.kuka.kmpOmniMove1500.swb.feature.feature.group -installIUs com.kuka.kmpOmniMove200.swb.feature.feature.group";
 
         #region Properties
+
+        private string sWBZipFilePath;
+
+        public string SWBZipFilePath
+        {
+            get { return sWBZipFilePath; }
+            set { sWBZipFilePath = value; }
+        }
+
 
         private string optionPackageList;
         private List<string> listOfFeatures = new List<string>();
@@ -43,6 +54,7 @@ namespace SWB_OptionPackageInstaller
 
         #endregion
 
+
         public CommandControler()
         {
             Instance = this;
@@ -56,14 +68,31 @@ namespace SWB_OptionPackageInstaller
             DataGridView dgv = MainForm.Instance.DataGridViewOfArtifacts;
             foreach (FileInfo package in optionPackagesPath.GetFiles("*.zip"))
             {
+                if (package.Name.StartsWith("SunriseWorkbench"))
+                {
+                    SWBZipFilePath = package.FullName;
+                    UnzipSunriseWorkbench(package.FullName, sunriseWorkbenchPath);
+                    continue;
+                }
+                PackagesCount++;
                 packages.Add(package.FullName);
                 packagesNames.Add(package.Name);
-
+                
             }
 
             string optionPackageList = FormatPackageNames(packages);
 
             return optionPackageList;
+        }
+        public void UnzipSunriseWorkbench(string swbZipfile,string swbFolderPath)
+        {         
+            ZipFile.ExtractToDirectory(swbZipfile, swbFolderPath);
+
+        }
+        public void UnzipSunriseWorkbench()
+        {
+            ZipFile.ExtractToDirectory(SWBZipFilePath, sunriseWorkbenchPath);
+            MainForm.Instance.unzipSWBThread.Abort();
         }
         public bool CheckPath(string pathIn)
         {
@@ -117,13 +146,15 @@ namespace SWB_OptionPackageInstaller
         
             commandToRun = string.Format(installCommandFormat, OptionPackageList, sunriseWorkbenchPath,featuresCommandPart);
             Trace.TraceInformation("Command to run for install packages: {0}", commandToRun);
-            RunCommand(commandToRun);                      
-
-          
+            RunCommand(commandToRun);
+            //TODO: FIX storing to database
+           // SQLManager.Instance.StoreInstall();
 
         }
         public List<string> features = new List<string>();
         public List<string> versions = new List<string>();
+        public int PackagesCount=0;
+
         public void GetFeaturesVersions(string optionPackageList)
         {
             string versionCommandResult = RunCommand(string.Format(featuresListCommandFormat,optionPackageList,sunriseWorkbenchPath));
@@ -134,6 +165,7 @@ namespace SWB_OptionPackageInstaller
                 {
                     if (!features.Contains(version.Split('=')[0].Trim()))
                     {
+                        PackagesInfo.Add(version.Split('=')[0].Trim(), version.Split('=')[1].Trim());
                         features.Add(version.Split('=')[0].Trim());
                         versions.Add(version.Split('=')[1].Trim());
                     }

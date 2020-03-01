@@ -27,8 +27,7 @@ namespace SWB_OptionPackageInstaller
 
         private static void InitializeControllerClassesInstance()
         {
-            SwVersion swVersion = new SwVersion();
-            ConsoleController consoleController = new ConsoleController();
+            SwVersion swVersion = new SwVersion();           
             IOHandler iOHandler = new IOHandler();
             ArtifactHandler artifactHandler = new ArtifactHandler();
             CommandControler commandControler = new CommandControler();

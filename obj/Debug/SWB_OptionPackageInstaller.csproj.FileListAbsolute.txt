@@ -42,3 +42,4 @@ C:\git\SWBOptionPackageInstaller\SWBOptionPackageInstaller\obj\Debug\SWB_OptionP
 C:\git\SWBOptionPackageInstaller\SWBOptionPackageInstaller\obj\Debug\SWB_OptionPackageInstaller.csproj.CopyComplete
 C:\git\SWBOptionPackageInstaller\SWBOptionPackageInstaller\obj\Debug\SWB_OptionPackageInstaller.exe
 C:\git\SWBOptionPackageInstaller\SWBOptionPackageInstaller\obj\Debug\SWB_OptionPackageInstaller.pdb
+C:\git\SWBOptionPackageInstaller\SWBOptionPackageInstaller\bin\Debug\Mono.Security.dll

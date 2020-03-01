@@ -5,5 +5,8 @@
     <Setting Name="ContentZipFileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">content.zip</Value>
     </Setting>
+    <Setting Name="DBConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Server = localhost;Port= 5432; Database = swb_installs;User ID = swb_installs_admin;Password = admin</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -38,11 +39,13 @@ namespace SWB_OptionPackageInstaller
 
 
         #region Variables
+        public Thread unzipSWBThread;
         public DirectoryInfo tempDir;
         public static MainForm Instance = null;
         public DataGridView dgv = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
         private bool dgvBuilded;
+        private Thread installThread;
         #endregion
 
         public MainForm()
@@ -189,7 +192,36 @@ namespace SWB_OptionPackageInstaller
 
         private void installOptionPackagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CommandControler.Instance.InstallOptionPackages();
+            pathOfOptionPackages = tbPathOfOptionpackages.Text.Trim().Replace('\\', '/');
+            CommandControler.Instance.OptionPackageList = CommandControler.Instance.CollectOptionPackages(PathOfOptionPackages);
+
+            CommandControler.Instance.GetFeaturesVersions(CommandControler.Instance.OptionPackageList);
+
+            ConfigureDataGridView(CommandControler.Instance.OptionPackageList);
+            if (!CommandControler.Instance.CheckPath(tbPathOfOptionpackages.Text.Trim()) || !CommandControler.Instance.CheckPath(tbPathOfSWB.Text.Trim()))
+            {
+                return;
+            }
+            else
+            {
+                PathOfOptionPackages = tbPathOfOptionpackages.Text.Trim().Replace('\\', '/'); ;
+                PathOfSWB = tbPathOfSWB.Text.Trim().Replace('\\', '/'); ;
+            }
+
+            unzipSWBThread = new Thread(new ThreadStart(CommandControler.Instance.UnzipSunriseWorkbench));
+            unzipSWBThread.Start();
+            while (unzipSWBThread.IsAlive)
+            {
+                MessageBox.Show("Please wait SWB is extracting...");
+            }
+            installThread = new Thread(new ThreadStart(CommandControler.Instance.InstallOptionPackages));
+            installThread.Start();
+            while (unzipSWBThread.IsAlive)
+            {
+                MessageBox.Show("Please wait packages being installed...");
+            }
+
+            MessageBox.Show("Installation Completed!");
         }
 
         private void showConsoleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -199,8 +231,8 @@ namespace SWB_OptionPackageInstaller
 
         private void sWBExtractionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // ConsoleController.Instance.ShowConsole(new string[] {"dfds" ,"fgsfg" });
-            CommandControler.Instance.Trying("C:/_SWB/SWB/eclipsec.exe -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository jar:\"file:///C:/_SWB/optionpackages/0000345989;01;KUKA Sunrise.Mobility 1.11 KMP_KMR oM.zip!/\" -repository jar:\"file:///C:/_SWB/optionpackages/0000345991;01;KUKA Sunrise.Mobility 1.11 KMP 1500.zip!/\" -repository jar:\"file:///C:/_SWB/optionpackages/0000345992;01;KUKA Sunrise.Mobility 1.11 KMP 200.zip!/\" -installIUs com.kuka.kmpOmniMove.swb.feature.feature.group -installIUs com.kuka.kmpOmniMove1500.swb.feature.feature.group -installIUs com.kuka.kmpOmniMove200.swb.feature.feature.group");
+         
+            CommandControler.Instance.UnzipSunriseWorkbench(CommandControler.Instance.SWBZipFilePath,PathOfSWB);
         }
     }
 }
