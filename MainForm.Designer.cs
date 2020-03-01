@@ -41,10 +41,11 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.showConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sWBExtractionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyArtifactsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.multipleSWBCreationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyArtifactsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sWBExtractionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installOptionPackagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tbPageQuickInstall.SuspendLayout();
@@ -186,36 +187,46 @@
             this.multipleSWBCreationToolStripMenuItem,
             this.copyArtifactsToolStripMenuItem,
             this.sWBExtractionToolStripMenuItem,
-            this.showConsoleToolStripMenuItem});
+            this.showConsoleToolStripMenuItem,
+            this.installOptionPackagesToolStripMenuItem});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(29, 23);
             this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
             // 
-            // showConsoleToolStripMenuItem
+            // multipleSWBCreationToolStripMenuItem
             // 
-            this.showConsoleToolStripMenuItem.Name = "showConsoleToolStripMenuItem";
-            this.showConsoleToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.showConsoleToolStripMenuItem.Text = "ShowConsole";
-            // 
-            // sWBExtractionToolStripMenuItem
-            // 
-            this.sWBExtractionToolStripMenuItem.Name = "sWBExtractionToolStripMenuItem";
-            this.sWBExtractionToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.sWBExtractionToolStripMenuItem.Text = "SWB Extraction";
+            this.multipleSWBCreationToolStripMenuItem.Name = "multipleSWBCreationToolStripMenuItem";
+            this.multipleSWBCreationToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.multipleSWBCreationToolStripMenuItem.Text = "MultipleSWBCreation";
             // 
             // copyArtifactsToolStripMenuItem
             // 
             this.copyArtifactsToolStripMenuItem.Name = "copyArtifactsToolStripMenuItem";
-            this.copyArtifactsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.copyArtifactsToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.copyArtifactsToolStripMenuItem.Text = "CopyArtifacts";
             // 
-            // multipleSWBCreationToolStripMenuItem
+            // sWBExtractionToolStripMenuItem
             // 
-            this.multipleSWBCreationToolStripMenuItem.Name = "multipleSWBCreationToolStripMenuItem";
-            this.multipleSWBCreationToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
-            this.multipleSWBCreationToolStripMenuItem.Text = "MultipleSWBCreation";
+            this.sWBExtractionToolStripMenuItem.Name = "sWBExtractionToolStripMenuItem";
+            this.sWBExtractionToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.sWBExtractionToolStripMenuItem.Text = "SWB Extraction";
+            this.sWBExtractionToolStripMenuItem.Click += new System.EventHandler(this.sWBExtractionToolStripMenuItem_Click);
+            // 
+            // showConsoleToolStripMenuItem
+            // 
+            this.showConsoleToolStripMenuItem.Name = "showConsoleToolStripMenuItem";
+            this.showConsoleToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.showConsoleToolStripMenuItem.Text = "ShowConsole";
+            this.showConsoleToolStripMenuItem.Click += new System.EventHandler(this.showConsoleToolStripMenuItem_Click);
+            // 
+            // installOptionPackagesToolStripMenuItem
+            // 
+            this.installOptionPackagesToolStripMenuItem.Name = "installOptionPackagesToolStripMenuItem";
+            this.installOptionPackagesToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.installOptionPackagesToolStripMenuItem.Text = "Install Option Packages";
+            this.installOptionPackagesToolStripMenuItem.Click += new System.EventHandler(this.installOptionPackagesToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -255,6 +266,7 @@
         private System.Windows.Forms.ToolStripMenuItem copyArtifactsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sWBExtractionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showConsoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem installOptionPackagesToolStripMenuItem;
     }
 }
 

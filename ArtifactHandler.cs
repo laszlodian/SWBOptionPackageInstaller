@@ -27,24 +27,7 @@ namespace SWB_OptionPackageInstaller
             Instance = this;
         }
 
-        public string CollectOptionPackages(string pathIn)
-        {
-            if (!CheckStatesHandler.Instance.CheckPath(pathIn))
-                return string.Empty;
-
-            DirectoryInfo optionPackagesPath = new DirectoryInfo(pathIn);
-            DataGridView dgv = MainForm.Instance.DataGridViewOfArtifacts;
-            foreach (FileInfo package in optionPackagesPath.GetFiles("*.zip"))
-            {
-                packages.Add(package.FullName);
-                packagesNames.Add(package.Name);
-                
-            }
-
-            string optionPackageList = FormatPackageNames(packages);
-
-            return optionPackageList;
-        }
+     
 
         private static void ExpandDataGridWithRows(DataGridView dgv, FileInfo package)
         {
@@ -55,16 +38,6 @@ namespace SWB_OptionPackageInstaller
             dgv.Update();
         }
 
-        public string FormatPackageNames(List<string> packages)
-        {
-            string stringToInsertCommand = string.Empty;
-
-            foreach (string item in packages)
-            {
-                stringToInsertCommand += string.Format(" -repository jar:\"file:///{0}!/\"", item);
-            }
-
-            return stringToInsertCommand;
-        }
+       
     }
 }

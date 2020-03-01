@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace SWB_OptionPackageInstaller
 {
     public partial class MainForm : Form
@@ -30,8 +31,8 @@ namespace SWB_OptionPackageInstaller
             get { return pathOfOptionPackages; }
             set { pathOfOptionPackages = value; }
         }
-       
-        public DataGridView DataGridViewOfArtifacts { get { return dgv; } set{dgv=value; } }
+
+        public DataGridView DataGridViewOfArtifacts { get { return dgv; } set { dgv = value; } }
 
         #endregion
 
@@ -41,6 +42,7 @@ namespace SWB_OptionPackageInstaller
         public static MainForm Instance = null;
         public DataGridView dgv = new DataGridView();
         private BindingSource bindingSource1 = new BindingSource();
+        private bool dgvBuilded;
         #endregion
 
         public MainForm()
@@ -48,54 +50,75 @@ namespace SWB_OptionPackageInstaller
             Instance = this;
             InitializeComponent();
 
-            dgv.Dock = DockStyle.Top;
-            dgv.BackgroundColor = Color.DarkCyan;      
-            this.tabControl1.TabPages[1].Controls.Add(dgv);    
-        
+            WindowState = FormWindowState.Maximized;
+          
+            dgv.Dock = DockStyle.Fill;
+            dgv.BackgroundColor = Color.LightCyan;
+          
+
             tbPathOfOptionpackages.Text = @"C:\_SWB\optionpackages";
             tbPathOfSWB.Text = @"C:\_SWB\SWB";
-           
+
+            this.Load += MainForm_Load;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            Text = string.Format("{0}       {1}", this.Text, SwVersion.Instance.ActualSWVersion);
+
         }
 
         public void ConfigureDataGridView(string packagesList)
         {
             string clearPackageName = string.Empty;
-            foreach (string pkg in packagesList.Split(new string[] { "-repository" },StringSplitOptions.RemoveEmptyEntries))
+            int i = 0;
+            foreach (string pkg in packagesList.Split(new string[] { "-repository" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 if (string.IsNullOrEmpty(pkg.Trim()))
                 {
                     continue;
                 }
-                clearPackageName = pkg.Substring(pkg.IndexOf(":///") + 4);//,  (pkg.LastIndexOf('!')+1)- pkg.IndexOf(":///"));
-               clearPackageName= clearPackageName.Remove(clearPackageName.IndexOf('!'));
-                bindingSource1.Add(new PackageGridModel(clearPackageName, "version",new DataGridViewCheckBoxCell()));                
+                clearPackageName = pkg.Substring(pkg.LastIndexOf("\\")+1);
+                clearPackageName = clearPackageName.Remove(clearPackageName.IndexOf('!'));
+                bindingSource1.Add(new PackageGridModel(clearPackageName, CommandControler.Instance.versions[i], true));
+                i++;
             }
-
+            
             dgv.Font = new Font(dgv.Font, FontStyle.Regular);
-            tabControl1.TabPages[1].Layout += MainForm_Layout;
+            tabControl1.TabPages["tbPageOptionPackages"].Layout += MainForm_Layout;
         }
-
+        public DataGridViewComboBoxColumn CreateComboBoxWithEnums()
+        {
+            DataGridViewComboBoxColumn combo = new DataGridViewComboBoxColumn();
+            combo.DataSource = true;
+            combo.DataPropertyName = "Title";
+            combo.Name = "Title";
+            return combo;
+        }
         private void MainForm_Layout(object sender, LayoutEventArgs e)
         {
-            EnumsAndComboBox_Load_For_All(sender, e);
+
+            if (!dgvBuilded)
+            {
+                EnumsAndComboBox_Load_For_All(sender, e);
+                dgvBuilded = true;
+            }
+
         }
 
         public void EnumsAndComboBox_Load_For_All(object sender, EventArgs e)
         {
             // Initialize the DataGridView.
-               dgv.AutoGenerateColumns = false;
-               dgv.AutoSize = true;
-               dgv.DataSource = bindingSource1;
+            dgv.AutoGenerateColumns = false;
+            dgv.AutoSize = true;
+            dgv.DataSource = bindingSource1;
 
             DataGridViewColumn column;
 
-
             column = new DataGridViewTextBoxColumn();
             column.DataPropertyName = "OptionPackageName";
-            column.Name = "OptionPackage Elnevezése";
+            column.Name = "Optionpackage Neve";
             dgv.Columns.Add(column);
-
-
             column = new DataGridViewTextBoxColumn();
             column.DataPropertyName = "Version";
             column.Name = "Verzió";
@@ -106,19 +129,19 @@ namespace SWB_OptionPackageInstaller
             column.Name = "Install";
             column.Width = 140;
             dgv.Columns.Add(column);
-
+            dgv.AutoResizeColumnHeadersHeight();
             // Initialize the form.
-            this.Controls.Add(dgv);
-            this.AutoSize = true;
-            this.Text = "Founded option packages - Choose which of them to install to SunriseWorkBench";
+            this.tabControl1.TabPages["tbPageOptionPackages"].Controls.Add(dgv);
+            dgv.AutoSize = true;
+            dgv.Text = "Founded option packages - Choose which of them to install to SunriseWorkBench";
         }
 
         private void tbPathOfSWB_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                pathOfSWB = tbPathOfSWB.Text.Trim().Replace('\\','/');
-                if (!CheckStatesHandler.Instance.CheckPath(PathOfSWB))
+                pathOfSWB = tbPathOfSWB.Text.Trim().Replace('\\', '/');
+                if (!CommandControler.Instance.CheckPath(PathOfSWB))
                     return;
 
                 btStart_Click(null, EventArgs.Empty);
@@ -130,21 +153,26 @@ namespace SWB_OptionPackageInstaller
         {
             if (e.KeyCode == Keys.Enter)
             {
-                pathOfOptionPackages = tbPathOfOptionpackages.Text.Trim().Replace('\\', '/'); 
-                if (!CheckStatesHandler.Instance.CheckPath(pathOfOptionPackages))
+                pathOfOptionPackages = tbPathOfOptionpackages.Text.Trim().Replace('\\', '/');
+                if (!CommandControler.Instance.CheckPath(pathOfOptionPackages))
                     return;
 
-                CommandControler.Instance.OptionPackageList= ArtifactHandler.Instance.CollectOptionPackages(PathOfOptionPackages);
-                ConfigureDataGridView(CommandControler.Instance.OptionPackageList);
-                
-                
+
+
+
                 btStart_Click(null, EventArgs.Empty);
             }
         }
 
         private void btStart_Click(object sender, EventArgs e)
         {
-            if (!CheckStatesHandler.Instance.CheckPath(tbPathOfOptionpackages.Text.Trim()) || !CheckStatesHandler.Instance.CheckPath(tbPathOfSWB.Text.Trim()))
+            pathOfOptionPackages = tbPathOfOptionpackages.Text.Trim().Replace('\\', '/');
+            CommandControler.Instance.OptionPackageList = CommandControler.Instance.CollectOptionPackages(PathOfOptionPackages);
+
+            CommandControler.Instance.GetFeaturesVersions(CommandControler.Instance.OptionPackageList);
+
+            ConfigureDataGridView(CommandControler.Instance.OptionPackageList);
+            if (!CommandControler.Instance.CheckPath(tbPathOfOptionpackages.Text.Trim()) || !CommandControler.Instance.CheckPath(tbPathOfSWB.Text.Trim()))
             {
                 return;
             }
@@ -159,6 +187,20 @@ namespace SWB_OptionPackageInstaller
 
         }
 
-      
+        private void installOptionPackagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommandControler.Instance.InstallOptionPackages();
+        }
+
+        private void showConsoleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CommandControler.Instance.StartCmd();
+        }
+
+        private void sWBExtractionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // ConsoleController.Instance.ShowConsole(new string[] {"dfds" ,"fgsfg" });
+            CommandControler.Instance.Trying("C:/_SWB/SWB/eclipsec.exe -clean -purgeHistory -application org.eclipse.equinox.p2.director -noSplash -repository jar:\"file:///C:/_SWB/optionpackages/0000345989;01;KUKA Sunrise.Mobility 1.11 KMP_KMR oM.zip!/\" -repository jar:\"file:///C:/_SWB/optionpackages/0000345991;01;KUKA Sunrise.Mobility 1.11 KMP 1500.zip!/\" -repository jar:\"file:///C:/_SWB/optionpackages/0000345992;01;KUKA Sunrise.Mobility 1.11 KMP 200.zip!/\" -installIUs com.kuka.kmpOmniMove.swb.feature.feature.group -installIUs com.kuka.kmpOmniMove1500.swb.feature.feature.group -installIUs com.kuka.kmpOmniMove200.swb.feature.feature.group");
+        }
     }
 }

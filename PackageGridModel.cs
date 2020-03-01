@@ -11,16 +11,16 @@ namespace SWB_OptionPackageInstaller
     {
 
         #region Properties
-        private DataGridViewCheckBoxCell _installCell;
+        private bool _installCell;
 
-        public DataGridViewCheckBoxCell InstallCell
+        public bool InstallCell
         {
             get { return _installCell; }
             set { _installCell = value; }
         }
 
-        private static string _optionPackageName = string.Empty;
-        public static string OptionPackageName
+        private  string _optionPackageName = string.Empty;
+        public  string OptionPackageName
         {
             get
             {
@@ -32,8 +32,8 @@ namespace SWB_OptionPackageInstaller
             }
         }
 
-        private static string _optionPackageVersion = string.Empty;
-        public static string Version
+        private  string _optionPackageVersion = string.Empty;
+        public  string Version
         {
             get
             {
@@ -48,11 +48,11 @@ namespace SWB_OptionPackageInstaller
 
 
 
-        public PackageGridModel(string optionPackageName,string optionPackageVersion,DataGridViewCheckBoxCell installCell)
+        public PackageGridModel(string optionPackageName,string optionPackageVersion,bool installCell)
         {
-            _optionPackageName = optionPackageName;
-            _optionPackageVersion = optionPackageVersion;
-            _installCell = installCell;
+            OptionPackageName = optionPackageName;
+            Version = optionPackageVersion;
+            InstallCell = installCell;
         }
     }
 }

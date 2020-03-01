@@ -30,17 +30,6 @@ namespace SWB_OptionPackageInstaller
             else
                 return true;
         }
-        public bool CheckPath(string pathIn)
-        {
-            if (!Directory.Exists(pathIn))
-            {
-                MessageBox.Show("The given path of the SWB does not exists!");
-                Trace.TraceWarning("The given path of the SWB does not exists! Given ath: {0}",pathIn);
-                return false;
-            }
-            else
-                return true;
-        }
-
+    
     }
 }

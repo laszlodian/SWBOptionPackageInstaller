@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,7 +18,8 @@ namespace SWB_OptionPackageInstaller
             InitializeControllerClassesInstance();
 
             TraceHelper.SetupListener();
-
+            Trace.TraceInformation("Initializing Form...");
+        
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
@@ -25,6 +27,8 @@ namespace SWB_OptionPackageInstaller
 
         private static void InitializeControllerClassesInstance()
         {
+            SwVersion swVersion = new SwVersion();
+            ConsoleController consoleController = new ConsoleController();
             IOHandler iOHandler = new IOHandler();
             ArtifactHandler artifactHandler = new ArtifactHandler();
             CommandControler commandControler = new CommandControler();
